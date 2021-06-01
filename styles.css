@@ -1,6 +1,9 @@
 body {
   text-align: center;
-  background-color: #2a2a2b;
+  background-image: url('https://mcdn.wallpapersafari.com/medium/40/64/ZpKJ1u.jpg');
+  background-size: cover;
+  background-repeat: none;
+  background-position: center center;
 }
 
 #level-title {
@@ -57,4 +60,11 @@ body {
 .pressed {
   box-shadow: 0 0 20px white;
   background-color: grey;
+}
+
+@media (max-width: 620px){
+  .btn{
+    width: 80px;
+    height: 80px;
+  }
 }
