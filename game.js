@@ -29,7 +29,7 @@ const nextSequence = () => {
   playSound(randomChosenColour)
 }
 
-function userClick() {
+const userClick = () => {
   $('.btn').click(function(event){
 
     let userChosenColour = event.target.id
@@ -42,10 +42,9 @@ function userClick() {
   });
 }
 
-  function checkAnswer(currentLevel){
+  const checkAnswer = (currentLevel) => {
+
   if(userClickedPattern[currentLevel] == gamePattern[currentLevel]){
-    
-    console.log('yep')
 
     if (userClickedPattern.length === gamePattern.length){
 
@@ -55,7 +54,14 @@ function userClick() {
     }
   }
   else{
-    console.log('nope')
+    $('#level-title').text('Game Over! Press enter to restart');
+    $('body').addClass('game-over')
+    setTimeout(function (){
+      $('body').removeClass('game-over')
+    }, 500);
+    let wrong = new Audio('sounds/wrong.mp3');
+    wrong.play();
+    
   }
 };
 
@@ -65,9 +71,8 @@ const playSound = (name) => {
 }
 
 const changeBgn = (color) => {
-  let x = 500;
   $('#' + color ).css("background-color", color);
   setTimeout(function(){
     $('#' + color ).css("background-color", 'transparent');
-  }, x);
+  }, 500);
 }
