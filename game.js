@@ -33,7 +33,15 @@ const userclick = () => {
   });
 }
 
-nextSequence()
+$(document).on('keydown', function(event) {
+  // 13 == enter in all browsers
+  if(event.which == 13){
+    $('#level-title').text('Level')
+    nextSequence();
+  }
+})
+
+
 userclick()
 
 
