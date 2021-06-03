@@ -7,7 +7,6 @@ let started = false
 $(document).on('keydown', function(event) {
   // 13 == enter in all browsers
   if(event.which == 13 && !started){
-    $('#level-title').text('Score: ' + score)
     nextSequence();
     userClick()
     started = true;
@@ -19,7 +18,7 @@ const nextSequence = () => {
   userClickedPattern = [];
   
   score++;
-  $('#level-title').text('Score: ' + score)
+  $('#level-title').text('Score:' + score + ' -- Highscore:')
 
   let randomNumber = Math.floor(Math.random() * 4);
   let randomChosenColour = buttonColours[randomNumber];
@@ -42,6 +41,13 @@ const userClick = () => {
   });
 }
 
+const startOver = () =>{
+  score = 0;
+  gamePattern = [];
+  started = false;
+}
+
+
   const checkAnswer = (currentLevel) => {
 
   if(userClickedPattern[currentLevel] == gamePattern[currentLevel]){
@@ -61,7 +67,7 @@ const userClick = () => {
     }, 500);
     let wrong = new Audio('sounds/wrong.mp3');
     wrong.play();
-    
+    startOver()
   }
 };
 
