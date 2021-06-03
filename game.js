@@ -1,14 +1,15 @@
 let buttonColours = ['red','blue','green','yellow'];
 let gamePattern = [];
 let userClickedPattern = [];
-let score = -1
-let started = false
+let score = -1;
+let highscore = 0;
+let started = false;
 
 $(document).on('keydown', function(event) {
   // 13 == enter in all browsers
   if(event.which == 13 && !started){
     nextSequence();
-    userClick()
+    userClick();
     started = true;
   }
 });
@@ -16,16 +17,22 @@ $(document).on('keydown', function(event) {
 const nextSequence = () => {
 
   userClickedPattern = [];
-  
+
   score++;
-  $('#level-title').text('Score:' + score + ' -- Highscore:')
+
+  if(score >= highscore){
+    highscore = score;
+  }
+
+  $('#level-title').text('Score:' + score + ' -- Highscore:' + highscore);
 
   let randomNumber = Math.floor(Math.random() * 4);
   let randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
  
-  changeBgn(randomChosenColour)
-  playSound(randomChosenColour)
+  changeBgn(randomChosenColour);
+  playSound(randomChosenColour);
+
 }
 
 const userClick = () => {
@@ -34,7 +41,7 @@ const userClick = () => {
     let userChosenColour = event.target.id
     userClickedPattern.push(userChosenColour);
 
-    changeBgn(userChosenColour)
+    changeBgn(userChosenColour);
     playSound(userChosenColour);
 
     checkAnswer(userClickedPattern.length-1);
@@ -42,9 +49,13 @@ const userClick = () => {
 }
 
 const startOver = () =>{
-  score = 0;
+  score = -1;
   gamePattern = [];
-  started = false;
+  $(document).one("keydown", function(event) {
+    if(event.which == 13){
+      nextSequence();
+    }
+  });
 }
 
 
@@ -67,7 +78,7 @@ const startOver = () =>{
     }, 500);
     let wrong = new Audio('sounds/wrong.mp3');
     wrong.play();
-    startOver()
+    startOver();
   }
 };
 
