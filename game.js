@@ -2,22 +2,38 @@ let buttonColours = ['red','blue','green','yellow'];
 let gamePattern = [];
 let userClickedPattern = [];
 
+const playSound = (name) => {
+  let sound = new Audio('sounds/' + name + '.mp3');
+  sound.play();
+}
+
+const changeBgn = (color) => {
+  let x = 500;
+  $('#' + color ).css("background-color", color);
+  setTimeout(function(){
+    $('#' + color ).css("background-color", 'transparent');
+  }, x);
+}
+
 const nextSequence = () => {
   let randomNumber = Math.floor(Math.random() * 4);
   let randomChosenColour = buttonColours[randomNumber];
   gamePattern.push(randomChosenColour);
+ 
+  changeBgn(randomChosenColour)
+  playSound(randomChosenColour) 
+}
 
-  $('#' + randomChosenColour ).fadeIn(100).fadeOut(100).fadeIn(100);
+const userclick = () => {
   $(document).click(function(event){
     let userChosenColour = event.target.id
     userClickedPattern.push(userChosenColour);
+    changeBgn(userChosenColour)
+    playSound(userChosenColour);
   });
-  
-  let audio = new Audio('sounds/' + randomChosenColour + '.mp3');
-  audio.play();
-
 }
 
 nextSequence()
+userclick()
 
 
